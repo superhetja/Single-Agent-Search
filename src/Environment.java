@@ -107,7 +107,7 @@ public class Environment {
 		if (!state.turned_on) {
 			moves.add(Action.TURN_ON);
 		} else {
-			if (state.position.equals(home)) {
+			if (state.position.equals(home) && state.dirt.size()==0) {
 				moves.add(Action.TURN_OFF);
 			}
 			if (state.dirt.contains(state.position)) {

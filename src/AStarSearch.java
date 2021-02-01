@@ -23,17 +23,16 @@ public class AStarSearch implements SearchAlgorithm {
 	public void doSearch(Environment env) {
 		environment = env;
 		heuristics.init(environment);
-		currentNode = new Node(environment.getCurrentState(), Integer.MAX_VALUE);
+		currentNode = new Node(environment.getCurrentState(), 0);
 		frontier = new ArrayList<Node>();
 		addNode(currentNode);
 
-		// TODO implement the search here
 		while(!(solutionFound)){
 			currentNode= findNextNode();
 			extendNode();
 
 			// Better to do this when we expand but....
-			if (currentNode.evaluation==0){
+			if (heuristics.eval(currentNode.state)==0){
 				solutionFound= true;
 				solutionNode = currentNode;
 			}
@@ -75,7 +74,7 @@ public class AStarSearch implements SearchAlgorithm {
 				State tmpState = environment.getNextState(currentNode.state, legal_moves.get(i));
 				if (!containsState(tmpState)) {
 					// Add extended nodes to the frontier
-					addNode(new Node(currentNode, tmpState, legal_moves.get(i), heuristics.eval(tmpState)));
+					addNode(new Node(currentNode, tmpState, legal_moves.get(i), currentNode.evaluation+environment.getCost(currentNode.state, legal_moves.get(i))));
 					nbNodeExpansions++;
 				}
 			}

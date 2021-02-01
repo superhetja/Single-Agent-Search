@@ -21,17 +21,19 @@ public class AStarSearch implements SearchAlgorithm {
 
 	@Override
 	public void doSearch(Environment env) {
+		// init
 		environment = env;
 		heuristics.init(environment);
 		currentNode = new Node(environment.getCurrentState(), 0);
 		frontier = new ArrayList<Node>();
 		addNode(currentNode);
 
+		// Search for solution
 		while(!(solutionFound)){
 			currentNode= findNextNode();
 			extendNode();
 
-			// Better to do this when we expand but....
+			// Have we found a solution 
 			if (heuristics.eval(currentNode.state)==0){
 				solutionFound= true;
 				solutionNode = currentNode;
@@ -46,7 +48,6 @@ public class AStarSearch implements SearchAlgorithm {
 			return null;
 		}
 		List<Action> ret = solutionNode.getPlan();
-		// TODO Auto-generated method stub
 		if (ret != null && !ret.isEmpty()) {
 			return ret;
 		} else if ( ret == null) {
@@ -101,20 +102,16 @@ public class AStarSearch implements SearchAlgorithm {
 
 	@Override
 	public int getNbNodeExpansions() {
-		// TODO Auto-generated method stub
 		return nbNodeExpansions;
 	}
 
 	@Override
 	public int getMaxFrontierSize() {
-		// TODO Auto-generated method stub
 		return maxFrontierSize;
 	}
 
 	@Override
 	public int getPlanCost() {
-		// TODO Auto-generated method stub
-
 		if (solutionNode != null) {
 			return solutionNode.evaluation;
 		}

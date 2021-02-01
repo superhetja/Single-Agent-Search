@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AStarSearch implements SearchAlgorithm {
-	private static final boolean True = false;
 	boolean solutionFound = false;
 	HashMap<State, Integer> hashMap = new HashMap<State, Integer>();
 	int nbNodeExpansions = 0;
@@ -22,7 +21,7 @@ public class AStarSearch implements SearchAlgorithm {
 
 	@Override
 	public void doSearch(Environment env) {
-		Environment environment = env;
+		environment = env;
 		heuristics.init(environment);
 		currentNode = new Node(environment.getCurrentState(), Integer.MAX_VALUE);
 		frontier = new ArrayList<Node>();
@@ -34,8 +33,8 @@ public class AStarSearch implements SearchAlgorithm {
 			extendNode();
 
 			// Better to do this when we expand but....
-			if (heuristics.eval(currentNode.state)==0){
-				solutionFound= True;
+			if (currentNode.evaluation==0){
+				solutionFound= true;
 				solutionNode = currentNode;
 			}
 		}
